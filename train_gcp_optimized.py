@@ -45,7 +45,7 @@ def download_stanford_cars_data():
         log.info("Downloading car images...")
         # Try multiple URLs in case some are down
         urls = [
-            'https://image-net.org/data/cars/car_ims.tgz',
+            'https://ai.stanford.edu/~jkrause/cars/car_ims.tgz',
             'https://www.kaggle.com/datasets/jessicali9530/stanford-cars-dataset/download?datasetVersionNumber=1',
         ]
         
@@ -144,7 +144,15 @@ def main():
     setup_gcp_environment()
     
     # Download data if needed
-    download_stanford_cars_data()
+    try:
+        download_stanford_cars_data()
+    except Exception as e:
+        log.warning(f"Automatic download failed: {e}")
+        log.info("Trying manual download...")
+        from download_dataset_manual import download_dataset
+        if not download_dataset():
+            log.error("All download methods failed. Please download manually.")
+            return
     
     # Prepare data (convert .mat to .csv)
     log.info("Preparing data...")
