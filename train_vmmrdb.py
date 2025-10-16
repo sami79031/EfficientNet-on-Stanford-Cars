@@ -60,17 +60,18 @@ def main():
     # Create trial info optimized for VMMRdb
     trial_info = TrialInfo(
         model_info=EfficientNets.b0.value,
-        trial_id="vmmrdb-training",
+        load_weights=True,
+        advprop=False,
+        freeze_pretrained_weights=False,
         epochs=50,  # Reduced epochs for initial testing
         batch_size=batch_size,
-        learning_rate=0.001,
-        weight_decay=1e-4,
+        initial_lr=0.001,
+        optimizer=torch.optim.AdamW,
+        optimizer_settings={'weight_decay': 1e-4},
+        scheduler_settings={'step_size': 10, 'gamma': 0.1},
+        custom_dropout_rate=None,
         num_classes=num_classes,
-        in_channels=3,
-        image_size=224,
-        num_workers=4,  # Optimized for GCP
-        pin_memory=True,
-        persistent_workers=True
+        in_channels=3
     )
     
     log.info(f"Starting VMMRdb training with trial: {trial_info.trial_id}")
@@ -78,16 +79,16 @@ def main():
     log.info(f"Epochs: {trial_info.epochs}")
     log.info(f"Number of classes: {trial_info.num_classes}")
     log.info(f"GPU available: {torch.cuda.is_available()}")
-    log.info(f"Data workers: {trial_info.num_workers}")
+    log.info(f"Data workers: 4")
     
     # Create data module
     training_data = StanfordCarsDataModuleGCP(
         data_directory=Path('data/input/stanford'),
-        image_size=trial_info.image_size,
+        image_size=224,
         batch_size=trial_info.batch_size,
-        num_workers=trial_info.num_workers,
-        pin_memory=trial_info.pin_memory,
-        persistent_workers=trial_info.persistent_workers
+        num_workers=4,
+        pin_memory=True,
+        persistent_workers=True
     )
     
     # Perform training
