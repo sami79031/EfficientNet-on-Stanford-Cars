@@ -68,7 +68,7 @@ def main():
         initial_lr=0.001,
         optimizer=torch.optim.AdamW,
         optimizer_settings={'weight_decay': 1e-4},
-        scheduler_settings={'step_size': 10, 'gamma': 0.1},
+        scheduler_settings={'patience': 5, 'factor': 0.5, 'min_lr': 1e-6},
         custom_dropout_rate=None,
         num_classes=num_classes,
         in_channels=3
