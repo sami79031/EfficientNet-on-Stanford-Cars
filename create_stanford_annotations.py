@@ -28,7 +28,14 @@ def create_stanford_annotations():
     # Process each class directory
     for class_dir in class_dirs:
         class_name = class_dir.name
-        class_id = int(class_name.split('_')[1]) - 1  # Convert class_001 to 0, class_002 to 1, etc.
+        
+        # Handle different naming formats
+        if '_' in class_name and class_name.split('_')[0] == 'class':
+            # Format: class_001, class_002, etc.
+            class_id = int(class_name.split('_')[1]) - 1
+        else:
+            # Use directory index as class ID
+            class_id = class_dirs.index(class_dir)
         
         # Get all images in this class
         image_files = []
