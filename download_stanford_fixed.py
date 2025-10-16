@@ -73,11 +73,11 @@ def setup_stanford_data(train_dir, test_dir, data_dir):
     
     # Copy train images
     log.info("Copying training images...")
-    subprocess.run(['cp', '-r', str(train_dir) + '/*', str(car_ims_dir)], shell=True, check=True)
+    subprocess.run(f'cp -r {train_dir}/* {car_ims_dir}', shell=True, check=True)
     
     # Copy test images
     log.info("Copying test images...")
-    subprocess.run(['cp', '-r', str(test_dir) + '/*', str(car_ims_dir)], shell=True, check=True)
+    subprocess.run(f'cp -r {test_dir}/* {car_ims_dir}', shell=True, check=True)
     
     # Create annotation files
     create_annotations_from_structure(car_ims_dir, devkit_dir, train_dir, test_dir)
