@@ -19,8 +19,20 @@ def clean_corrupted_images():
     log.info("Cleaning corrupted images from VMMRdb dataset...")
     
     # Read current annotations
-    annos_df = pd.read_csv(devkit_dir / 'cars_annos.csv')
-    log.info(f"Starting with {len(annos_df)} images")
+    try:
+        annos_df = pd.read_csv(devkit_dir / 'cars_annos.csv')
+        log.info(f"Starting with {len(annos_df)} images")
+    except:
+        log.info("No annotations file found, will create new one")
+        annos_df = pd.DataFrame()
+    
+    # If no annotations, create them from scratch
+    if len(annos_df) == 0:
+        log.info("Creating annotations from scratch...")
+        from create_vmmrdb_annotations import create_vmmrdb_annotations
+        create_vmmrdb_annotations("VMMRdb")
+        annos_df = pd.read_csv(devkit_dir / 'cars_annos.csv')
+        log.info(f"Created annotations for {len(annos_df)} images")
     
     # Check each image and remove corrupted ones
     valid_annotations = []
@@ -33,6 +45,9 @@ def clean_corrupted_images():
             # Try to open and verify the image
             with Image.open(image_path) as img:
                 img.verify()  # Verify the image is valid
+                # Also check if image has reasonable dimensions
+                if img.size[0] < 10 or img.size[1] < 10:
+                    raise ValueError("Image too small")
             
             # If we get here, the image is valid
             valid_annotations.append(row)
