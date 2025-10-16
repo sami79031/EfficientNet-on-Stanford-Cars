@@ -55,10 +55,11 @@ def recreate_vmmrdb_dataset(vmmrdb_path="VMMRdb"):
         log.info(f"Processing {car_model}: {len(image_files)} images")
         
         # Copy images to car_ims directory and create annotations
-        for img_file in image_files:
+        for img_idx, img_file in enumerate(image_files):
             try:
-                # Create new filename to avoid conflicts
-                new_filename = f"{car_model}_{img_file.name}"
+                # Create clean filename to avoid conflicts
+                clean_model_name = car_model.replace(' ', '_').replace('-', '_')
+                new_filename = f"{clean_model_name}_{img_idx:06d}.jpg"
                 new_path = car_ims_dir / new_filename
                 
                 # Copy image
