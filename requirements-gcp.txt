@@ -1,0 +1,14 @@
+torch>=2.0.0
+torchvision>=0.15.0
+pytorch-lightning>=2.4.0
+matplotlib>=3.8.2
+pandas>=2.1.4
+scikit-learn>=1.4.2
+fvcore>=0.1.1.post20200716
+psutil>=5.7.2
+neptune-client>=0.4.119
+mat4py>=0.4.3
+scipy>=1.11.4
+Pillow>=9.0.0
+tensorboard>=2.13.0
+google-cloud-storage>=2.10.0

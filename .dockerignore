@@ -1,0 +1,21 @@
+# Ignore unnecessary files for Docker build
+.git
+.gitignore
+*.pyc
+__pycache__
+.pytest_cache
+.coverage
+.venv
+venv/
+*.log
+lightning_logs/
+data/output/
+.DS_Store
+*.tgz
+*.tar.gz
+*.zip
+notebooks/
+images/
+*.md
+README.md
+GCP_DEPLOYMENT.md
