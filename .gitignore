@@ -1,0 +1,6 @@
+.idea
+/notebooks/.ipynb_checkpoints/
+/data/
+/venv/
+/lightning_logs/
+*.pyc
