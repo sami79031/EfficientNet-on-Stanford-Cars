@@ -83,12 +83,10 @@ def main():
     
     # Create data module
     training_data = StanfordCarsDataModuleGCP(
-        data_directory=Path('data/input/stanford'),
         image_size=224,
         batch_size=trial_info.batch_size,
-        num_workers=4,
-        pin_memory=True,
-        persistent_workers=True
+        in_channels=3,
+        root_path=Path('.')
     )
     
     # Perform training
