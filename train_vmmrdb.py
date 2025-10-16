@@ -14,7 +14,7 @@ sys.path.append(str(Path(__file__).parent))
 
 from training.train_gcp import perform_training_gcp
 from training.trial_info import TrialInfo
-from models.efficient_net.efficient_net import EfficientNets
+from models.efficient_net.efficient_nets import EfficientNets
 from datasets.stanford.stanford_cars_data_module_gcp import StanfordCarsDataModuleGCP
 from utils.default_logging import configure_default_logging
 
