@@ -117,18 +117,24 @@ def create_dummy_data():
     # Create dummy annotation files
     import pandas as pd
     
-    # Create cars_annos.csv
+    # Create cars_annos.csv with more samples
     annotations = []
-    for i in range(10):
+    for i in range(100):  # Create 100 dummy images
         annotations.append({
             'relative_im_path': f'car_ims/dummy_{i:06d}.jpg',
             'bbox_x1': 0, 'bbox_y1': 0, 'bbox_x2': 224, 'bbox_y2': 224,
             'class': i % 196,  # Cycle through 196 classes
-            'test': 0 if i < 8 else 1  # 8 train, 2 val
+            'test': 0 if i < 80 else 1  # 80 train, 20 val
         })
     
     annos_df = pd.DataFrame(annotations)
     annos_df.to_csv(devkit_dir / 'cars_annos.csv', index=False)
+    
+    # Also create more dummy images to match annotations
+    for i in range(10, 100):  # Create remaining images
+        img_array = np.random.randint(0, 255, (224, 224, 3), dtype=np.uint8)
+        img = Image.fromarray(img_array)
+        img.save(car_ims_dir / f'dummy_{i:06d}.jpg')
     
     # Create cars_meta.csv
     meta_data = []

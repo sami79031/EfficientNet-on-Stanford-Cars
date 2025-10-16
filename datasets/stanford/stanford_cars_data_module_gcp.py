@@ -30,6 +30,16 @@ class StanfordCarsDatasetGCP(Dataset):
 
         is_test = int(dataset_type != DatasetTypes.train)
         self.image_file_names = annotations[annotations.test == is_test].relative_im_path
+        
+        # Debug: print dataset info
+        print(f"Dataset type: {dataset_type}")
+        print(f"Total annotations: {len(annotations)}")
+        print(f"Test flag: {is_test}")
+        print(f"Filtered images: {len(self.image_file_names)}")
+        if len(self.image_file_names) > 0:
+            print(f"First image: {self.image_file_names.iloc[0]}")
+        else:
+            print("No images found for this dataset type!")
 
     def transform(self, image):
         if self.dataset_type is DatasetTypes.train:
