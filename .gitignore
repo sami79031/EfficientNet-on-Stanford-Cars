@@ -4,3 +4,21 @@
 /venv/
 /lightning_logs/
 *.pyc
+__pycache__/
+*.tgz
+*.tar.gz
+*.zip
+*.pth
+*.pt
+*.pkl
+*.h5
+*.hdf5
+# Large image files
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.bmp
+*.tiff
+# LFS files
+.git/lfs/
