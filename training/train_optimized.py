@@ -75,19 +75,16 @@ def perform_training_optimized(
         accelerator = 'gpu'
         devices = 1
         precision = '16-mixed'  # Mixed precision for speed
-        strategy = None
     else:
         accelerator = 'cpu'
         devices = 1
         precision = 'bf16-mixed'  # bfloat16 for CPU
-        strategy = None
 
     # Optimized trainer configuration
     trainer = pl.Trainer(
         max_epochs=trial_info.epochs,
         accelerator=accelerator,
         devices=devices,
-        strategy=strategy,
         precision=precision,
         logger=logger,
         callbacks=[callback, lrl, checkpoint_callback, early_stop_callback],
