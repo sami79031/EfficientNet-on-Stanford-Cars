@@ -1,7 +1,7 @@
 from time import time
 
 import torch
-from neptune.exceptions import NoChannelValue
+# from neptune.exceptions import NoChannelValue  # Commented out due to compatibility issues
 from pytorch_lightning import Callback
 from sklearn.metrics import classification_report
 from torch.utils.data import DataLoader
@@ -117,7 +117,7 @@ def log_dictionary(dictionary, trainer):
                 trainer.logger.experiment.log_text(k, str(v))
             else:
                 log.info(f'{k}: {v}')
-        except NoChannelValue:
+        except Exception:  # Catch any exception instead of NoChannelValue
             if hasattr(trainer.logger.experiment, 'log_text'):
                 trainer.logger.experiment.log_text(k, 'None')
             else:

@@ -44,7 +44,7 @@ class StanfordCarsDatasetLightningModule(pl.LightningModule, ABC):
                                               **self.trial_info.optimizer_settings)
         
         scheduler = {
-            'scheduler': ReduceLROnPlateau(optimizer, verbose=True, **self.trial_info.scheduler_settings),
+            'scheduler': ReduceLROnPlateau(optimizer, **self.trial_info.scheduler_settings),
             'reduce_on_plateau': True,
             'monitor': 'val_loss',
             'name': 'lr'
